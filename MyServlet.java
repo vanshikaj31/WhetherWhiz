@@ -14,40 +14,20 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-/**
- * Servlet implementation class MyServlet
- */
+
 @WebServlet("/MyServlet")
 public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public MyServlet() {
         super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+         }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.sendRedirect("index.html");
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//API Key
 		String apiKey = "fa201996955bdd72c37773afaf110304 ";
-		// Get the city from the form input
         String city = request.getParameter("city"); 
-
-        // Create the URL for the OpenWeatherMap API request
         String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
         try {
@@ -56,19 +36,14 @@ public class MyServlet extends HttpServlet {
             connection.setRequestMethod("GET");
 
                 InputStream inputStream = connection.getInputStream();
-                InputStreamReader reader = new InputStreamReader(inputStream);
-               // System.out.println(reader);
-                
+                InputStreamReader reader = new InputStreamReader(inputStream);   
                 Scanner scanner = new Scanner(reader);
                 StringBuilder responseContent = new StringBuilder();
 
                 while (scanner.hasNext()) {
                     responseContent.append(scanner.nextLine());
                 }
-                
-               // System.out.println(responseContent);
-                scanner.close();
-                
+                scanner.close();  
                 // Parse the JSON response to extract temperature, date, and humidity
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.fromJson(responseContent.toString(), JsonObject.class);
